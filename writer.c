@@ -8,7 +8,12 @@
 
 void* printOutput(void *arg){
 //    printf("Pthread value %ld",pthread_self());
+
     Queue *queue = (Queue *) arg;
-    printf("%s\n",DequeueString(queue));
+    char *string = DequeueString(queue);
+    while(string != NULL){
+        printf("%s\n", string);
+        string = DequeueString(queue);
+    }
     return NULL;
 }

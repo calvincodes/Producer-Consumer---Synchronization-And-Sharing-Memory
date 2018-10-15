@@ -19,6 +19,9 @@ Queue *CreateStringQueue(int size){
     queue->enqueueBlockCount = 0;
     queue->dequeueCount = 0;
     queue->enqueueCount = 0;
+    pthread_cond_init(&queue->full, NULL);
+    pthread_cond_init(&queue->empty, NULL);
+    pthread_mutex_init(&queue->lock, NULL);
     return queue;
 }
 
@@ -34,38 +37,47 @@ int isEmpty(Queue* queue)
 }
 
 void EnqueueString(Queue *q, char *string){
+    pthread_mutex_lock(&q->lock);
     if (isFull(q)){
-        pthread_cond_wait(&q->full, &q->lock);
         ++q->enqueueBlockCount;
+        pthread_cond_wait(&q->full, &q->lock);
+
         // Block the mutex
     }
-    pthread_mutex_lock(&q->lock);
-    q->rear = (q->rear + 1)%q->size;
-    q->data[q->rear] = string;
-    q->currSize = q->currSize + 1;
-    ++q->enqueueCount;
-    pthread_mutex_unlock(&q->lock);
-    pthread_cond_signal(&q->empty);
+    if(!isFull(q)) {
+        q->rear = (q->rear + 1) % q->size;
+        q->data[q->rear] = string;
+        q->currSize = q->currSize + 1;
+        ++q->enqueueCount;
+        pthread_mutex_unlock(&q->lock);
+        pthread_cond_signal(&q->empty);
+    }
 }
 
 char *DequeueString(Queue *q){
+    pthread_mutex_lock(&q->lock);
     if (isEmpty(q)){
+        ++q->dequeueBlockCount;
         pthread_cond_wait(&q->empty, &q->lock);
         // Block the mutex
-        ++q->dequeueBlockCount;
+
     }
-    pthread_mutex_lock(&q->lock);
-    char* data = q->data[q->front];
-    q->front = (q->front + 1)%q->size;
-    q->currSize = q->currSize - 1;
-    ++q->dequeueCount;
-    pthread_mutex_unlock(&q->lock);
-    pthread_cond_signal(&q->full);
-    return data;
+    if (!isEmpty(q)) {
+        char *data = q->data[q->front];
+        q->front = (q->front + 1) % q->size;
+        q->currSize = q->currSize - 1;
+        ++q->dequeueCount;
+        pthread_mutex_unlock(&q->lock);
+        pthread_cond_signal(&q->full);
+        return data;
+    }
 }
 
 void PrintQueueStats(Queue *q){
-//    printf();
+    printf("enqueueCount : %d ", q->enqueueCount);
+    printf("dequeueCount : %d ", q->dequeueCount);
+    printf("enqueueBlockCount : %d ", q->enqueueBlockCount);
+    printf("dequeueBlockCount : %d ", q->dequeueBlockCount);
 
 }
 
