@@ -6,29 +6,13 @@
 #include <pthread.h>
 #include "queue.h"
 
-typedef struct queue {
-    int front;
-    int rear;
-    int size;
-    int currSize;
-    char* data;
-    int enqueueCount;
-    int dequeueCount;
-    int enqueueBlockCount;
-    int dequeueBlockCount;
-    pthread_mutex_t lock;
-    pthread_cond_t full;
-    pthread_cond_t empty;
-} Queue;
-
-
 Queue *CreateStringQueue(int size){
     Queue* queue = (Queue*) malloc(sizeof(Queue));
     queue->size = size;
     queue->front = 0;
     queue->currSize = 0;
     queue->rear = size - 1;
-    queue->data = (char*) malloc(queue->size * sizeof(char));
+    queue->data = (char**) malloc(queue->size * sizeof(char*));
     queue->dequeueBlockCount = 0;
     queue->enqueueBlockCount = 0;
     queue->dequeueCount = 0;
@@ -55,7 +39,7 @@ void EnqueueString(Queue *q, char *string){
     }
     pthread_mutex_lock(&q->lock);
     q->rear = (q->rear + 1)%q->size;
-    q->data[q->rear] = *string;
+    q->data[q->rear] = string;
     q->currSize = q->currSize + 1;
     q->enqueueCount++;
     pthread_mutex_unlock(&q->lock);
@@ -69,7 +53,7 @@ char *DequeueString(Queue *q){
         q->dequeueBlockCount++;
     }
     pthread_mutex_lock(&q->lock);
-    char* data = &q->data[q->front];
+    char* data = q->data[q->front];
     q->front = (q->front + 1)%q->size;
     q->size = q->size - 1;
     q->dequeueCount++;
