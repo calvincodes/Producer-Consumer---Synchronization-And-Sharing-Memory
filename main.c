@@ -15,15 +15,17 @@ int main() {
 //    pthread_create(&reader, NULL, readInput, &queue);
 //    pthread_create(&munch1, NULL, replaceBlanks, &queue);
 //    pthread_create(&munch2, NULL, convertToLowerCase, &queue);
-    pthread_create(&writer, NULL, printOutput, &queue);
+    EnqueueString(queue, "abc");
+    pthread_create(&writer, NULL, printOutput, queue);
 //    pthread_join(reader, (void **) &queue);
 //    pthread_join(munch1, (void **) &queue);
 //    pthread_join(munch2, (void **) &queue);
-    pthread_join(writer, (void **) &queue);
-    EnqueueString(queue, "abc");
+    pthread_join(writer, (void **) queue);
+
     EnqueueString(queue, "defg");
     EnqueueString(queue, "hijk");
     printf("%s\n",DequeueString(queue));
+    printf("%s",DequeueString(queue));
     printf("%s",DequeueString(queue));
     return 0;
 }

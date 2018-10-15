@@ -4,7 +4,9 @@
 
 #include <stdlib.h>
 #include <pthread.h>
+#include <stdio.h>
 #include "queue.h"
+
 
 Queue *CreateStringQueue(int size){
     Queue* queue = (Queue*) malloc(sizeof(Queue));
@@ -12,7 +14,7 @@ Queue *CreateStringQueue(int size){
     queue->front = 0;
     queue->currSize = 0;
     queue->rear = size - 1;
-    queue->data = (char**) malloc(queue->size * sizeof(char*));
+    queue->data = (char*) malloc(queue->size * sizeof(char));
     queue->dequeueBlockCount = 0;
     queue->enqueueBlockCount = 0;
     queue->dequeueCount = 0;
@@ -34,14 +36,14 @@ int isEmpty(Queue* queue)
 void EnqueueString(Queue *q, char *string){
     if (isFull(q)){
         pthread_cond_wait(&q->full, &q->lock);
-        q->enqueueBlockCount++;
+        ++q->enqueueBlockCount;
         // Block the mutex
     }
     pthread_mutex_lock(&q->lock);
     q->rear = (q->rear + 1)%q->size;
     q->data[q->rear] = string;
     q->currSize = q->currSize + 1;
-    q->enqueueCount++;
+    ++q->enqueueCount;
     pthread_mutex_unlock(&q->lock);
     pthread_cond_signal(&q->empty);
 }
@@ -50,19 +52,20 @@ char *DequeueString(Queue *q){
     if (isEmpty(q)){
         pthread_cond_wait(&q->empty, &q->lock);
         // Block the mutex
-        q->dequeueBlockCount++;
+        ++q->dequeueBlockCount;
     }
     pthread_mutex_lock(&q->lock);
     char* data = q->data[q->front];
     q->front = (q->front + 1)%q->size;
-    q->size = q->size - 1;
-    q->dequeueCount++;
+    q->currSize = q->currSize - 1;
+    ++q->dequeueCount;
     pthread_mutex_unlock(&q->lock);
     pthread_cond_signal(&q->full);
     return data;
 }
 
 void PrintQueueStats(Queue *q){
+//    printf();
 
 }
 
