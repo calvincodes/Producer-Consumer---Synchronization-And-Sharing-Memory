@@ -27,20 +27,13 @@ void *readInputTemp(void *arg){
         // Any processing is required only if encountered character is NOT EOF.
         if (c != EOF) {
             // If character read is not terminating this line and buffer is exhausted, throw error.
-            if (index >= BUFFER_SIZE && c != '\n') {
+            if (index >= BUFFER_SIZE) {
                 fprintf(stderr, "Line size exceeds buffer size %d", BUFFER_SIZE);
                 exit(-1);
             }
 
-            // Add to buffer if there is space available.
-            // Corner case here is, if your input string is of same length as buffer size and the newLine is
-            // the character at BUFFER_SIZE index. In this case, we will not throw error. Rather we have the
-            // entire line in our buffer and we will simply read the entire buffer everywhere, till be reach
-            // the end of buffer or we encounter a '\n' character.
-            if (index < BUFFER_SIZE) {
-                // Add current character to input buffer
-                inputBuffer[index++] = (char) c;
-            }
+            // Add current character to input buffer
+            inputBuffer[index++] = (char) c;
 
             // Check if current character is the end of line for current line
             if (c == '\n') {
