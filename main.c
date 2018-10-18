@@ -1,21 +1,19 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include "queue.h"
 #include "reader.h"
 #include "munch1.h"
 #include "munch2.h"
 #include "writer.h"
 #include "struct_args.h"
 
+
 int main() {
 
-    // Thread initialisation
     pthread_t reader;
     pthread_t munch1;
     pthread_t munch2;
     pthread_t writer;
-
 
     // Queue initialisation
     Queue *readerToMunch1 = CreateStringQueue(10);
