@@ -6,7 +6,7 @@
 #include "munch2.h"
 #include "writer.h"
 
-int main() {
+int main_() {
     pthread_t reader;
     pthread_t munch1;
     pthread_t munch2;

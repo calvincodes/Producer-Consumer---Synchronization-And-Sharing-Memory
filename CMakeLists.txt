@@ -3,4 +3,4 @@ project(os_hw2 C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(os_hw2 main.c)
+add_executable(os_hw2 main.c reader.c reader.h queue.c queue.h constants.c constants.h)
