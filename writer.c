@@ -20,7 +20,7 @@ void* printOutput(void *arg){
         free(string);
         string = DequeueString(munch2ToWriter);
     }
-    fprintf(stderr, "\n\nTOTAL LINES PROCESSED: %d\n\n", i);
+    printf("TOTAL LINES PROCESSED: %d", i);
 
     pthread_exit(0);
 }
