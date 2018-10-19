@@ -30,7 +30,6 @@ void *replaceBlanks(void *arg){
                 str[i] = '*';
             i++;
         }
-//        printf("%s\n", str);
         EnqueueString(munch1ToMunch2, str);
         data = DequeueString(readerToMunch1);
     }
@@ -41,15 +40,15 @@ void *replaceBlanks(void *arg){
 }
 
 // TODO: Remove. This is for module testing purpose only.
-int main() {
-    Queue *queue = CreateStringQueue(10);
-    Queue *queue1 = CreateStringQueue(10);
-    struct_args * structMunch1 = (struct_args *) malloc(sizeof(struct_args));
-    structMunch1->q1 = queue;
-    structMunch1->q2 = queue1;
-    EnqueueString(queue, "arpit jain");
-    EnqueueString(queue, "anshu verma vishnu");
-    EnqueueString(queue, "dotSru susma");
-    EnqueueString(queue, NULL);
-    replaceBlanks(structMunch1);
-}
+//int main() {
+//    Queue *queue = CreateStringQueue(10);
+//    Queue *queue1 = CreateStringQueue(10);
+//    struct_args * structMunch1 = (struct_args *) malloc(sizeof(struct_args));
+//    structMunch1->q1 = queue;
+//    structMunch1->q2 = queue1;
+//    EnqueueString(queue, "arpit jain");
+//    EnqueueString(queue, "anshu verma vishnu");
+//    EnqueueString(queue, "dotSru susma");
+//    EnqueueString(queue, NULL);
+//    replaceBlanks(structMunch1);
+//}

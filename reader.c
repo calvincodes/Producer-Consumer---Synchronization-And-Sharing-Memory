@@ -15,7 +15,7 @@ void *readInput(void *arg){
     if( inputBuffer == NULL)
     {
         perror("Unable to allocate memory for reader input buffer");
-        exit(-1);
+        exit(1);
     }
 
     int c;
@@ -31,10 +31,15 @@ void *readInput(void *arg){
             }
 
             // Add current character to input buffer
-            inputBuffer[index++] = (char) c;
+            if (c != '\n') {
+                inputBuffer[index++] = (char) c;
+            }
 
             // Check if current character is the end of line for current line
             if (c == '\n') {
+
+                // Add end of line as a terminating character to the buffer
+                inputBuffer[index] = '\0';
 
                 // Enqueue the input buffer till now in the queue.
                 EnqueueString(queue, inputBuffer);
@@ -51,6 +56,8 @@ void *readInput(void *arg){
         }
     } while(c != EOF);
 
-    return(0);
+    EnqueueString(queue, NULL);
+
+    pthread_exit(0);
 }
 
