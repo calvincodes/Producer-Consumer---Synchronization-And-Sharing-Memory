@@ -5,10 +5,8 @@
 #include "reader.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "queue.h"
-#include "constants.h"
 
-void *readInputTemp(void *arg){
+void *readInput(void *arg){
 
     Queue *queue = (Queue *) arg;
     char *inputBuffer;

@@ -179,3 +179,4 @@ cmake-build-debug/CMakeFiles/os_hw2.dir/depend.internal
 cmake-build-debug/CMakeFiles/os_hw2.dir/main.c.o
 cmake-build-debug/CMakeFiles/os_hw2.dir/queue.c.o
 cmake-build-debug/CMakeFiles/os_hw2.dir/reader.c.o
+!/Makefile
