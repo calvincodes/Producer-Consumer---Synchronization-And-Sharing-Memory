@@ -3,12 +3,13 @@
 //
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "writer.h"
 #include "queue.h"
 
 void* printOutput(void *arg){
 
-    printf("\n$$$$$$$$$$$$$$$\nWRITER THREAD: %ld\n$$$$$$$$$$$$\n",pthread_self());
+//    printf("\n$$$$$$$$$$$$$$$\nWRITER THREAD: %ld\n$$$$$$$$$$$$\n",pthread_self());
 
     Queue *munch2ToWriter = (Queue *) arg;
     char *string = DequeueString(munch2ToWriter);
@@ -16,9 +17,10 @@ void* printOutput(void *arg){
     //printf("First string dequeued: %s\n", string);
     int i = 0;
     while(string != NULL){
-        printf("Dequeue String is %s\n", string);
-        //free(string);
-        printf("Dequeued %d\n", i++);
+//        printf("Dequeue String is %s\n", string);
+//        printf("Dequeued %d\n", i++);
+        printf("%s", string);
+        free(string);
         string = DequeueString(munch2ToWriter);
     }
     //printf("last string to writer: %s\n", string);

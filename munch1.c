@@ -9,7 +9,7 @@
 
 void *replaceBlanks(void *arg){
 
-    printf("\n$$$$$$$$$$$$$$$\nMUNCH1 THREAD: %ld\n$$$$$$$$$$$$\n",pthread_self());
+//    printf("\n$$$$$$$$$$$$$$$\nMUNCH1 THREAD: %ld\n$$$$$$$$$$$$\n",pthread_self());
 
     // structure to hold both the queues
     struct_args *args = (struct_args *) arg;
@@ -25,7 +25,8 @@ void *replaceBlanks(void *arg){
     // If you find a NULL, then terminate the thread
     while (data != NULL){
         int i = 0;
-        char *str = strdup(data);
+//        char *str = strdup(data);
+        char *str = data;
         //free(data);
         while (str[i])
         {
@@ -33,7 +34,7 @@ void *replaceBlanks(void *arg){
                 str[i] = '*';
             i++;
         }
-        printf("munch1 added %s\n\n", str);
+//        printf("munch1 added %s\n\n", str);
         EnqueueString(munch1ToMunch2, str);
         //free(str);
         data = DequeueString(readerToMunch1);

@@ -10,7 +10,7 @@
 
 void *convertToLowerCase(void *arg){
 
-    printf("\n$$$$$$$$$$$$$$$\nMUNCH2 THREAD: %ld\n$$$$$$$$$$$$\n",pthread_self());
+//    printf("\n$$$$$$$$$$$$$$$\nMUNCH2 THREAD: %ld\n$$$$$$$$$$$$\n",pthread_self());
 
     // structure to hold both the queues
     struct_args *args = (struct_args *) arg;
@@ -26,7 +26,8 @@ void *convertToLowerCase(void *arg){
     // If you find a NULL, then terminate the thread
     while (data != NULL){
         int i = 0;
-        char *str = strdup(data);
+//        char *str = strdup(data);
+        char *str = data;
         //free(data);
         while (str[i])
         {
@@ -34,9 +35,9 @@ void *convertToLowerCase(void *arg){
                 str[i] -= 32;
             i++;
         }
-        printf("Munch2 string is %s\n",str);
+//        printf("Munch2 string is %s\n",str);
         EnqueueString(munch2ToWriter, str);
-        //free(str);
+//        free(str);
         data = DequeueString(munch1ToMunch2);
     }
     EnqueueString(munch2ToWriter, NULL);

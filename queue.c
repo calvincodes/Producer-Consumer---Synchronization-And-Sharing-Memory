@@ -42,7 +42,9 @@ void EnqueueString(Queue *q, char *string) {
     pthread_mutex_lock(&q->lock);
     if (isFull(q)) {
         //printf("queue full");
-        ++q->enqueueBlockCount;
+        if (string != NULL) {
+            ++q->enqueueBlockCount;
+        }
         pthread_cond_wait(&q->full, &q->lock);
 
         // Block the mutex
@@ -51,7 +53,9 @@ void EnqueueString(Queue *q, char *string) {
     q->rear = (q->rear + 1) % q->size;
     q->data[q->rear] = string;
     q->currSize = q->currSize + 1;
-    ++q->enqueueCount;
+    if (string != NULL) {
+        ++q->enqueueCount;
+    }
     //pthread_mutex_unlock(&q->lock);
     pthread_cond_signal(&q->empty);
     pthread_mutex_unlock(&q->lock);
@@ -74,7 +78,9 @@ char *DequeueString(Queue *q) {
         printf("*****************\nNEGATIVE while dequeue DAFAQ\n");
         printf("Pthread value %ld\n******************\n",pthread_self());
     }
-    ++q->dequeueCount;
+    if (data != NULL) {
+        ++q->dequeueCount;
+    }
     // pthread_mutex_unlock(&q->lock);
     pthread_cond_signal(&q->full);
     pthread_mutex_unlock(&q->lock);
@@ -87,7 +93,7 @@ void PrintQueueStats(Queue *q) {
     printf("dequeueCount : %d ", q->dequeueCount);
     printf("enqueueBlockCount : %d ", q->enqueueBlockCount);
     printf("dequeueBlockCount : %d ", q->dequeueBlockCount);
-    printf("current size : %d ", q->currSize);
+    printf("current size :s %d ", q->currSize);
 }
 
 

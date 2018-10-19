@@ -1,33 +1,14 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <execinfo.h>
+#include <signal.h>
 #include "reader.h"
 #include "munch1.h"
 #include "munch2.h"
 #include "writer.h"
-//#include <stdio.h>
-#include <execinfo.h>
-#include <signal.h>
-//#include <stdlib.h>
-//#include <unistd.h>
-
-
-void handler(int sig) {
-    void *array[10];
-    size_t size;
-
-    // get void*'s for all entries on the stack
-    size = backtrace(array, 10);
-
-    // print out all the frames to stderr
-    fprintf(stderr, "Error: signal %d:\n", sig);
-    backtrace_symbols_fd(array, size, STDERR_FILENO);
-    exit(1);
-}
 
 int main() {
-
-    //signal(SIGSEGV, handler);   // install our handler
 
     pthread_t reader;
     pthread_t munch1;
@@ -82,7 +63,7 @@ int main() {
         printf("Thread join Failed for Writer");
         return 2;
     }
-    printf("\n Statistics of Reader To Munch1 Queue");
+    printf("Statistics of Reader To Munch1 Queue");
     PrintQueueStats(readerToMunch1);
     printf("\n Statistics of Munch1 To Munch2 Queue");
     PrintQueueStats(munch1ToMunch2);
