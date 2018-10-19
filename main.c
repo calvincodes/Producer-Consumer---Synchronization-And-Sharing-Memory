@@ -5,8 +5,6 @@
 #include "munch1.h"
 #include "munch2.h"
 #include "writer.h"
-#include "struct_args.h"
-
 
 int main() {
 

@@ -5,11 +5,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "munch2.h"
-#include "struct_args.h"
-#ifndef OS_HW2_QUEUE_H
-#define OS_HW2_QUEUE_H
-    #include "queue.h"
-#endif
 
 
 void *convertToLowerCase(void *arg){
