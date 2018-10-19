@@ -4,54 +4,52 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "munch1.h"
 
 void *replaceBlanks(void *arg){
 
-    Queue *queue = (Queue *) arg;
-    char *data = DequeueString(queue);
+    // structure to hold both the queues
+    struct_args *args = (struct_args *) arg;
 
-//    while (string != NULL) {
-//
-//        char *dupString = strdup(string);
-//
-//        int index = 0;
-//        char c = dupString[index];
-//
-//        while (c != '\0') {
-//            if (c == ' ') {
-//                dupString[index] = '*';
-//            }
-//            index++;
-//            c = dupString[index];
-//        }
-//
-////        printf("%s\n", dupString);
-//        string = DequeueString(queue);
-//        printf("NEW STR \n");
-//        printf("%s\n", string);
-//    }
-    while(data != NULL){
-        int i=0;
+    // Queue between Munch1 and Munch2
+    Queue *readerToMunch1 = args->q1;
+
+    // Queue between Munch2 and writer
+    Queue *munch1ToMunch2 = args->q2;
+
+    char *data = DequeueString(readerToMunch1);
+
+    // If you find a NULL, then terminate the thread
+    while (data != NULL){
+        int i = 0;
         char *str = strdup(data);
-        while (str[i]){
-            if(str[i] == ' '){
+        while (str[i])
+        {
+            if (str[i] == ' ')
                 str[i] = '*';
-            }
             i++;
         }
-        printf("%s\n", str);
-        data = DequeueString(queue);
+//        printf("%s\n", str);
+        EnqueueString(munch1ToMunch2, str);
+        data = DequeueString(readerToMunch1);
     }
 
+    free(data);
+
+    pthread_exit(0);
 }
 
 // TODO: Remove. This is for module testing purpose only.
-int main_t() {
+int main() {
     Queue *queue = CreateStringQueue(10);
+    Queue *queue1 = CreateStringQueue(10);
+    struct_args * structMunch1 = (struct_args *) malloc(sizeof(struct_args));
+    structMunch1->q1 = queue;
+    structMunch1->q2 = queue1;
     EnqueueString(queue, "arpit jain");
     EnqueueString(queue, "anshu verma vishnu");
     EnqueueString(queue, "dotSru susma");
     EnqueueString(queue, NULL);
-    replaceBlanks(queue);
+    replaceBlanks(structMunch1);
 }

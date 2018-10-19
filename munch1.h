@@ -12,4 +12,9 @@
 #include "queue.h"
 #endif
 
+#ifndef OS_HW2_STRUCT_ARGS_H
+#define OS_HW2_STRUCT_ARGS_H
+#include "struct_args.h"
+#endif //OS_HW2_STRUCT_ARGS_H
+
 void *replaceBlanks(void *arg);
