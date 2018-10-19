@@ -5,8 +5,6 @@
 #include "reader.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "queue.h"
-#include "constants.h"
 
 void *readInput(void *arg){
 
