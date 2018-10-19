@@ -2,7 +2,12 @@
 // Created by Anshu on 10/18/18.
 //
 
+
+
+#ifndef OS_HW2_QUEUE_H
+#define OS_HW2_QUEUE_H
 #include "queue.h"
+#endif //OS_HW2_QUEUE_H
 
 #ifndef OS_HW2_STRUCT_ARGS_H
 #define OS_HW2_STRUCT_ARGS_H
