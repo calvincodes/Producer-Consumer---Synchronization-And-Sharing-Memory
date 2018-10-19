@@ -59,6 +59,11 @@ void *readInput(void *arg){
             // Reset index, free up existing memory and allocate fresh memory for input buffer.
             index = 0;
             inputBuffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
+            if( inputBuffer == NULL)
+            {
+                fprintf(stderr, "Unable to allocate memory for reader input buffer");
+                exit(1);
+            }
         }
 
     } while(c != EOF);

@@ -25,7 +25,15 @@ int main() {
     Queue *munch1ToMunch2 = CreateStringQueue(BUFFER_SIZE);
     Queue *munch2ToWriter = CreateStringQueue(BUFFER_SIZE);
     struct_args *structMunch1 = (struct_args*) malloc(sizeof(struct_args));
+    if(!structMunch1){
+        fprintf(stderr, "Failed to allocate memory");
+        return 2;
+    }
     struct_args *structMunch2 = (struct_args*) malloc(sizeof(struct_args));
+    if(!structMunch2){
+        fprintf(stderr, "Failed to allocate memory");
+        return 2;
+    }
     structMunch1->q1 = readerToMunch1;
     structMunch1->q2 = munch1ToMunch2;
     structMunch2->q1 = munch1ToMunch2;
