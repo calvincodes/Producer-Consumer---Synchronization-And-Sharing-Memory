@@ -4,10 +4,13 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "munch2.h"
 
 
 void *convertToLowerCase(void *arg){
+
+    printf("\n$$$$$$$$$$$$$$$\nMUNCH2 THREAD: %ld\n$$$$$$$$$$$$\n",pthread_self());
 
     // structure to hold both the queues
     struct_args *args = (struct_args *) arg;
@@ -24,19 +27,19 @@ void *convertToLowerCase(void *arg){
     while (data != NULL){
         int i = 0;
         char *str = strdup(data);
+        //free(data);
         while (str[i])
         {
             if (str[i] >= 97 && str[i] <= 122)
                 str[i] -= 32;
             i++;
         }
+        printf("Munch2 string is %s\n",str);
         EnqueueString(munch2ToWriter, str);
+        //free(str);
         data = DequeueString(munch1ToMunch2);
     }
     EnqueueString(munch2ToWriter, NULL);
-
-    free(data);
-
     pthread_exit(0);
 
 }

@@ -8,11 +8,14 @@
 
 void *readInput(void *arg){
 
+    printf("\n$$$$$$$$$$$$$$$\nREAD THREAD: %ld\n$$$$$$$$$$$$\n",pthread_self());
+
     Queue *queue = (Queue *) arg;
     char *inputBuffer;
 
     inputBuffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
-    if( inputBuffer == NULL) {
+    if( inputBuffer == NULL)
+    {
         perror("Unable to allocate memory for reader input buffer");
         exit(1);
     }
@@ -45,8 +48,11 @@ void *readInput(void *arg){
                 // Add end of line as a terminating character to the buffer
                 inputBuffer[index] = '\0';
 
+                printf("Reader added %s\n\n", inputBuffer);
+
                 // Enqueue the input buffer till now in the queue.
                 EnqueueString(queue, inputBuffer);
+                //printf("%d\n", index);
 
                 // Reset index, free up existing memory and allocate fresh memory for input buffer.
                 index = 0;
@@ -54,16 +60,17 @@ void *readInput(void *arg){
             }
         }
     } while(c != EOF);
-
+    printf("Reached EOF while reading");
     EnqueueString(queue, NULL);
 
     pthread_exit(0);
 }
 
 int main_t() {
-    Queue *queue = CreateStringQueue(10);
+    Queue *queue = CreateStringQueue(1500);
     readInput(queue);
     // TODO: Remove. These are for module testing purpose only.
     char *string = DequeueString(queue);
     printf("%s\n", string);
 }
+
