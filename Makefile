@@ -28,17 +28,17 @@ queue.o: queue.c queue.h
     $(CC) $(WARNING_FLAGS) -c queue.c
 
 clean:
-    rm -f $(EXE) *.o
-    rm -rf $(SCAN_BUILD_DIR)
+	rm -f $(EXE) *.o
+	rm -rf $(SCAN_BUILD_DIR)
 
 #
 # Run the Clang Static Analyzer
 #
-scan-build: clean
-    scan-build -o $(SCAN_BUILD_DIR) make
+	scan-build: clean
+	scan-build -o $(SCAN_BUILD_DIR) make
 
 #
 # View the one scan available using firefox
 #
-scan-view: scan-build
+	scan-view: scan-build
     firefox -new-window $(SCAN_BUILD_DIR)/*/index.html
