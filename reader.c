@@ -14,7 +14,7 @@ void *readInput(void *arg){
 
     if( inputBuffer == NULL)
     {
-        fprintf(stderr, "Unable to allocate memory for reader input buffer\n");
+        fprintf(stderr, "Unable to allocate memory for reader input buffer");
         exit(1);
     }
 
@@ -31,7 +31,7 @@ void *readInput(void *arg){
             while (c != '\n' && c != EOF) {
                 c = getchar();
             }
-            fprintf(stderr, "THIS LINE EXHAUSTED THE BUFFER SIZE %d AND HAS BEEN DISCARDED", BUFFER_SIZE);
+            fprintf(stderr, "THIS LINE EXHAUSTED THE BUFFER SIZE %d AND HAS BEEN DISCARDED\n", BUFFER_SIZE);
             index = 0;
             free(inputBuffer);
             inputBuffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
