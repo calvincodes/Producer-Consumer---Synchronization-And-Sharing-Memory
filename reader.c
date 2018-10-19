@@ -9,9 +9,8 @@
 void *readInput(void *arg){
 
     Queue *queue = (Queue *) arg;
-    char *inputBuffer;
+    char *inputBuffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
 
-    inputBuffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
     if( inputBuffer == NULL)
     {
         fprintf(stderr, "Unable to allocate memory for reader input buffer");
@@ -19,7 +18,7 @@ void *readInput(void *arg){
     }
 
     int c;
-    int index = 0;
+    unsigned int index = 0;
     do {
 
         c = getchar();
