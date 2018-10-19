@@ -24,6 +24,7 @@ void *replaceBlanks(void *arg){
     while (data != NULL){
         int i = 0;
         char *str = strdup(data);
+        free(data);
         while (str[i])
         {
             if (str[i] == ' ')
@@ -33,8 +34,9 @@ void *replaceBlanks(void *arg){
         EnqueueString(munch1ToMunch2, str);
         data = DequeueString(readerToMunch1);
     }
+    EnqueueString(munch1ToMunch2, NULL);
 
-    free(data);
+
 
     pthread_exit(0);
 }

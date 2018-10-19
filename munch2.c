@@ -33,6 +33,7 @@ void *convertToLowerCase(void *arg){
         EnqueueString(munch2ToWriter, str);
         data = DequeueString(munch1ToMunch2);
     }
+    EnqueueString(munch2ToWriter, NULL);
 
     free(data);
 

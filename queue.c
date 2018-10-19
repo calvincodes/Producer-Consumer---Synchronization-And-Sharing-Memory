@@ -14,7 +14,7 @@ Queue *CreateStringQueue(int size) {
     queue->front = 0;
     queue->currSize = 0;
     queue->rear = size - 1;
-    queue->data = (char *) malloc(queue->size * sizeof(char));
+    queue->data = (char **) malloc(queue->size * sizeof(char*));
     if (!queue->data) {
         fprintf(stderr, "Could not allocate memory for queue data");
         exit(1);
