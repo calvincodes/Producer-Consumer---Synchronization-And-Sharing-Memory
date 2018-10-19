@@ -33,39 +33,39 @@ int main() {
 
     // thread Creation
     if(pthread_create(&reader, NULL, readInput, readerToMunch1) != 0){
-        printf("Thread Creation Failed for reader");
+        fprintf(stderr, "Thread Creation Failed for reader");
         return 2;
     }
     if(pthread_create(&munch1, NULL, replaceBlanks, structMunch1)!= 0){
-        printf("Thread Creation Failed for Munch1");
+        fprintf(stderr, "Thread Creation Failed for Munch1");
         return 2;
     }
     if(pthread_create(&munch2, NULL, convertToLowerCase, structMunch2)!= 0){
-        printf("Thread Creation Failed for Munch2");
+        fprintf(stderr, "Thread Creation Failed for Munch2");
         return 2;
     }
 
     if(pthread_create(&writer, NULL, printOutput, (void *)munch2ToWriter)){
-        printf("Thread Creation Failed for Writer");
-        return 0;
+        fprintf(stderr, "Thread Creation Failed for Writer");
+        return 2;
     }
 
     // thread Destroy
     if(pthread_join(reader, (void **) NULL) != 0){
-        printf("Thread join Failed for Reader");
-        return 2;
+        fprintf(stderr, "Thread join Failed for Reader");
+        return  2;
     }
     if(pthread_join(munch1, (void **) NULL) != 0){
-        printf("Thread join Failed for Munch1");
+        fprintf(stderr, "Thread join Failed for Munch1");
         return 2;
     }
     if(pthread_join(munch2, (void **) NULL) != 0){
-        printf("Thread join Failed for Munch2");
+        fprintf(stderr, "Thread join Failed for Munch2");
         return 2;
     }
 
     if (pthread_join(writer, (void **) NULL) != 0){
-        printf("Thread join Failed for Writer");
+        fprintf(stderr, "Thread join Failed for Writer");
         return 2;
     }
 
