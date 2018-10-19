@@ -14,21 +14,15 @@ int main() {
     pthread_t writer;
 
     // Queue initialisation
-    Queue *readerToMunch1 = CreateStringQueue(10);
-    Queue *munch1ToMunch2 = CreateStringQueue(10);
-    Queue *munch2ToWriter = CreateStringQueue(10);
+    Queue *readerToMunch1 = CreateStringQueue(BUFFER_SIZE);
+    Queue *munch1ToMunch2 = CreateStringQueue(BUFFER_SIZE);
+    Queue *munch2ToWriter = CreateStringQueue(BUFFER_SIZE);
     struct_args *structMunch1 = (struct_args*) malloc(sizeof(struct_args));
     struct_args *structMunch2 = (struct_args*) malloc(sizeof(struct_args));
     structMunch1->q1 = readerToMunch1;
     structMunch1->q2 = munch1ToMunch2;
     structMunch2->q1 = munch1ToMunch2;
     structMunch2->q2 = munch2ToWriter;
-
-    // Testing purposes
-    EnqueueString(munch2ToWriter, "abc");
-    EnqueueString(munch2ToWriter, "defg");
-    EnqueueString(munch2ToWriter, "hijk");
-    EnqueueString(munch2ToWriter, NULL);
 
     // thread Creation
     if(pthread_create(&reader, NULL, readInput, readerToMunch1) != 0){
@@ -66,7 +60,6 @@ int main() {
         printf("Thread join Failed for Writer");
         return 2;
     }
-
 
     PrintQueueStats(munch2ToWriter);
     return 0;
