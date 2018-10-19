@@ -27,11 +27,13 @@ void *readInput(void *arg){
         // If character read is not terminating this line and buffer is exhausted:
         // Print it to stderr and discard this line.
         if (index >= BUFFER_SIZE) {
+            inputBuffer[index-1] = '\0';
             while (c != '\n' && c != EOF) {
                 c = getchar();
             }
-            fprintf(stderr, "THIS LINE EXHAUSTED THE BUFFER SIZE %d AND HAS BEEN DISCARDED: %s ", BUFFER_SIZE, inputBuffer);
+            fprintf(stderr, "THIS LINE EXHAUSTED THE BUFFER SIZE %d AND HAS BEEN DISCARDED", BUFFER_SIZE);
             index = 0;
+            free(inputBuffer);
             inputBuffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
             continue;
         }
