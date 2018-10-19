@@ -77,11 +77,11 @@ int main() {
         return 2;
     }
 
-    printf("Statistics of Reader To Munch1 Queue");
+    fprintf(stderr, "Statistics of Reader To Munch1 Queue");
     PrintQueueStats(readerToMunch1);
-    printf("\nStatistics of Munch1 To Munch2 Queue");
+    fprintf(stderr, "\nStatistics of Munch1 To Munch2 Queue");
     PrintQueueStats(munch1ToMunch2);
-    printf("\nStatistics of Munch2 To Writer Queue");
+    fprintf(stderr, "\nStatistics of Munch2 To Writer Queue");
     PrintQueueStats(munch2ToWriter);
     return 0;
 }

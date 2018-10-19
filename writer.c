@@ -14,7 +14,8 @@ void* printOutput(void *arg){
     char *string = DequeueString(munch2ToWriter);
 
     while(string != NULL) {
-        printf("%s", string);
+        printf("%s\n", string);
+        free(string);
         string = DequeueString(munch2ToWriter);
     }
 

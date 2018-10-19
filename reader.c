@@ -50,7 +50,8 @@ void *readInput(void *arg){
 
             // Add end of line as a terminating character to the buffer
             if (c == '\n') {
-                inputBuffer[index] = '\n';
+//                inputBuffer[index] = '\n';
+                inputBuffer[index] = '\0';
             }
 
             // Enqueue the input buffer till now in the queue.
