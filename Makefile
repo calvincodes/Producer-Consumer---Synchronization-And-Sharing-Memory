@@ -3,14 +3,14 @@ WARNING_FLAGS = -Wall -Wextra
 EXE = prodcomm
 SCAN_BUILD_DIR = scan-build-out
 
-all: main.o reader.o munch1.o munch2.o writer.o constants.o  queue.o struct_args.h
-	$(CC) -o $(EXE) main.o reader.o munch1.o munch2.o writer.o constants.o  queue.o struct_args.h  -lpthread
+all: main.o reader.o munch1.o munch2.o writer.o constants.o  queue.o struct_args.o
+	$(CC) -o $(EXE) main.o reader.o munch1.o munch2.o writer.o constants.o  queue.o struct_args.o  -lpthread
 
 clean:
 	rm -f $(EXE) *.o
 	rm -rf $(SCAN_BUILD_DIR)
 
-main.o: main.c reader.h munch1.h munch2.h writer.h queue.h struct_args.h constants.h
+main.o: main.c reader.h munch1.h munch2.h writer.h queue.h struct_args.o constants.h
 	$(CC) $(WARNING_FLAGS) -c main.c
 
 reader.o: reader.c reader.h struct_args.h queue.h
@@ -30,6 +30,9 @@ constants.o: constants.c constants.h
 
 queue.o: queue.c queue.h
 	$(CC) $(WARNING_FLAGS) -c queue.c
+
+struct_args.o: struct_args.c struct_args.h queue.h
+    $(CC) $(WARNING_FLAGS) -c struct_args.c
 
 #
 # Run the Clang Static Analyzer

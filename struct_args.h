@@ -10,6 +10,9 @@
 
 #ifndef OS_HW2_QUEUE_H
 #define OS_HW2_QUEUE_H
+
+#include <stdlib.h>
+#include <stdio.h>
 #include "queue.h"
 #endif //OS_HW2_QUEUE_H
 
@@ -17,3 +20,6 @@ typedef struct struct_args{
     Queue *q1;
     Queue *q2;
 }struct_args;
+
+
+struct_args* getCombinedQueue(Queue *q1, Queue *q2);

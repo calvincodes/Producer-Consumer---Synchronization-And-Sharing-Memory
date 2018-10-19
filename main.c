@@ -24,31 +24,17 @@ int main() {
     Queue *readerToMunch1 = CreateStringQueue(BUFFER_SIZE);
     Queue *munch1ToMunch2 = CreateStringQueue(BUFFER_SIZE);
     Queue *munch2ToWriter = CreateStringQueue(BUFFER_SIZE);
-    struct_args *structMunch1 = (struct_args*) malloc(sizeof(struct_args));
-    if(!structMunch1){
-        fprintf(stderr, "Failed to allocate memory");
-        return 2;
-    }
-    struct_args *structMunch2 = (struct_args*) malloc(sizeof(struct_args));
-    if(!structMunch2){
-        fprintf(stderr, "Failed to allocate memory");
-        return 2;
-    }
-    structMunch1->q1 = readerToMunch1;
-    structMunch1->q2 = munch1ToMunch2;
-    structMunch2->q1 = munch1ToMunch2;
-    structMunch2->q2 = munch2ToWriter;
 
     // thread Creation
     if(pthread_create(&reader, NULL, readInput, readerToMunch1) != 0){
         fprintf(stderr, "Thread Creation Failed for reader");
         return 2;
     }
-    if(pthread_create(&munch1, NULL, replaceBlanks, structMunch1)!= 0){
+    if(pthread_create(&munch1, NULL, replaceBlanks, getCombinedQueue(readerToMunch1, munch1ToMunch2))!= 0){
         fprintf(stderr, "Thread Creation Failed for Munch1");
         return 2;
     }
-    if(pthread_create(&munch2, NULL, convertToLowerCase, structMunch2)!= 0){
+    if(pthread_create(&munch2, NULL, convertToLowerCase, getCombinedQueue(munch1ToMunch2, munch2ToWriter))!= 0){
         fprintf(stderr, "Thread Creation Failed for Munch2");
         return 2;
     }
