@@ -13,11 +13,14 @@ void* printOutput(void *arg){
     Queue *munch2ToWriter = (Queue *) arg;
     char *string = DequeueString(munch2ToWriter);
 
+    int i = 0;
     while(string != NULL) {
+        i++;
         printf("%s\n", string);
         free(string);
         string = DequeueString(munch2ToWriter);
     }
+    fprintf(stderr, "\n\nTOTAL LINES PROCESSED: %d\n\n", i);
 
     pthread_exit(0);
 }
