@@ -2,11 +2,12 @@
 // Created by Anshu on 10/14/18.
 //
 
+#include <pthread.h>
 #ifndef OS_HW2_QUEUE_H
 #define OS_HW2_QUEUE_H
 
 #endif //OS_HW2_QUEUE_H
-#include <pthread.h>
+
 
 typedef struct queue {
     int front;

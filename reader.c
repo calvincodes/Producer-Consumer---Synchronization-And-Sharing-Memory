@@ -54,8 +54,3 @@ void *readInput(void *arg){
     return(0);
 }
 
-// TODO: Remove. This is for module testing purpose only.
-//int main() {
-//    Queue *queue = CreateStringQueue(10);
-//    readInputTemp(queue);
-//}

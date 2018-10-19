@@ -9,11 +9,11 @@
 void* printOutput(void *arg){
 //    printf("Pthread value %ld",pthread_self());
 
-    Queue *queue = (Queue *) arg;
-    char *string = DequeueString(queue);
+    Queue *munch2ToWriter = (Queue *) arg;
+    char *string = DequeueString(munch2ToWriter);
     while(string != NULL){
         printf("%s\n", string);
-        string = DequeueString(queue);
+        string = DequeueString(munch2ToWriter);
     }
-    return NULL;
+    pthread_exit(0);
 }
