@@ -77,7 +77,7 @@ int main() {
         return 2;
     }
 
-    fprintf(stderr, "Statistics of Reader To Munch1 Queue");
+    fprintf(stderr, "\nStatistics of Reader To Munch1 Queue");
     PrintQueueStats(readerToMunch1);
     fprintf(stderr, "\nStatistics of Munch1 To Munch2 Queue");
     PrintQueueStats(munch1ToMunch2);
