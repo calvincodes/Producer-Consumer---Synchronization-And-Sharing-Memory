@@ -63,11 +63,12 @@ int main() {
         printf("Thread join Failed for Writer");
         return 2;
     }
+
     printf("Statistics of Reader To Munch1 Queue");
     PrintQueueStats(readerToMunch1);
-    printf("\n Statistics of Munch1 To Munch2 Queue");
+    printf("\nStatistics of Munch1 To Munch2 Queue");
     PrintQueueStats(munch1ToMunch2);
-    printf("\n Statistics of Munch2 To Writer Queue");
+    printf("\nStatistics of Munch2 To Writer Queue");
     PrintQueueStats(munch2ToWriter);
     return 0;
 }

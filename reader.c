@@ -8,8 +8,6 @@
 
 void *readInput(void *arg){
 
-//    printf("\n$$$$$$$$$$$$$$$\nREAD THREAD: %ld\n$$$$$$$$$$$$\n",pthread_self());
-
     Queue *queue = (Queue *) arg;
     char *inputBuffer;
 
@@ -23,60 +21,50 @@ void *readInput(void *arg){
     int c;
     int index = 0;
     do {
+
         c = getchar();
-        // Any processing is required only if encountered character is NOT EOF.
-//        if (c != EOF) {
-            // If character read is not terminating this line and buffer is exhausted, throw error.
-            if (index >= BUFFER_SIZE) {
-                while (c != '\n' && c != EOF) {
-                    c = getchar();
-                }
-                index = 0;
-                free(inputBuffer);
-                inputBuffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
+
+        // If character read is not terminating this line and buffer is exhausted:
+        // Print it to stderr and discard this line.
+        if (index >= BUFFER_SIZE) {
+            while (c != '\n' && c != EOF) {
+                c = getchar();
+            }
+            fprintf(stderr, "THIS LINE EXHAUSTED THE BUFFER SIZE %d AND HAS BEEN DISCARDED: %s ", BUFFER_SIZE, inputBuffer);
+            index = 0;
+            inputBuffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
+            continue;
+        }
+
+        // Add current character to input buffer
+        if (c != '\n' && c != EOF) {
+            inputBuffer[index++] = (char) c;
+        }
+
+        // Check if current character is the end of line for current line
+        if (c == '\n' || c == EOF) {
+
+            if (index == 0 && c == EOF) {
                 continue;
             }
 
-            // Add current character to input buffer
-            if (c != '\n' && c != EOF) {
-                inputBuffer[index++] = (char) c;
+            // Add end of line as a terminating character to the buffer
+            if (c == '\n') {
+                inputBuffer[index] = '\n';
             }
 
-            // Check if current character is the end of line for current line
-            if (c == '\n' || c == EOF) {
+            // Enqueue the input buffer till now in the queue.
+            EnqueueString(queue, inputBuffer);
 
-                if (index == 0 && c == EOF) {
-                    continue;
-                }
+            // Reset index, free up existing memory and allocate fresh memory for input buffer.
+            index = 0;
+            inputBuffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
+        }
 
-                // Add end of line as a terminating character to the buffer
-                if (c == '\n') {
-                    inputBuffer[index] = '\n';
-                }
-
-//                printf("Reader added %d\n\n", inputBuffer[0]);
-
-                // Enqueue the input buffer till now in the queue.
-                EnqueueString(queue, inputBuffer);
-                //printf("%d\n", index);
-
-                // Reset index, free up existing memory and allocate fresh memory for input buffer.
-                index = 0;
-                inputBuffer = (char *)malloc(BUFFER_SIZE * sizeof(char));
-            }
-//        }
     } while(c != EOF);
-//    printf("Reached EOF while reading");
+
     EnqueueString(queue, NULL);
 
     pthread_exit(0);
-}
-
-int main_t() {
-    Queue *queue = CreateStringQueue(1500);
-    readInput(queue);
-    // TODO: Remove. These are for module testing purpose only.
-    char *string = DequeueString(queue);
-    printf("%s\n", string);
 }
 
