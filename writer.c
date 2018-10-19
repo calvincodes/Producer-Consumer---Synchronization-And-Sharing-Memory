@@ -8,14 +8,14 @@
 #include "queue.h"
 
 void* printOutput(void *arg){
-//    printf("Pthread value %ld",pthread_self());
 
     Queue *munch2ToWriter = (Queue *) arg;
     char *string = DequeueString(munch2ToWriter);
-    while(string != NULL){
-        printf("%s\n", string);
-        free(string);
+
+    while(string != NULL) {
+        printf("%s", string);
         string = DequeueString(munch2ToWriter);
     }
+
     pthread_exit(0);
 }

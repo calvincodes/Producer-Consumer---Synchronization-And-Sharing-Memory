@@ -41,9 +41,10 @@ int isEmpty(Queue *queue) {
 void EnqueueString(Queue *q, char *string) {
     pthread_mutex_lock(&q->lock);
     if (isFull(q)) {
-        ++q->enqueueBlockCount;
+        if (string != NULL) {
+            ++q->enqueueBlockCount;
+        }
         pthread_cond_wait(&q->full, &q->lock);
-
         // Block the mutex
     }
 
@@ -53,9 +54,9 @@ void EnqueueString(Queue *q, char *string) {
     if (string != NULL) {
         ++q->enqueueCount;
     }
-    pthread_mutex_unlock(&q->lock);
-    pthread_cond_signal(&q->empty);
 
+    pthread_cond_signal(&q->empty);
+    pthread_mutex_unlock(&q->lock);
 }
 
 char *DequeueString(Queue *q) {
@@ -64,7 +65,6 @@ char *DequeueString(Queue *q) {
         ++q->dequeueBlockCount;
         pthread_cond_wait(&q->empty, &q->lock);
         // Block the mutex
-
     }
 
     char *data = q->data[q->front];
@@ -73,18 +73,19 @@ char *DequeueString(Queue *q) {
     if (data != NULL) {
         ++q->dequeueCount;
     }
-    pthread_mutex_unlock(&q->lock);
+
     pthread_cond_signal(&q->full);
+    pthread_mutex_unlock(&q->lock);
     return data;
 
 }
 
 void PrintQueueStats(Queue *q) {
-    printf("enqueueCount : %d ", q->enqueueCount);
-    printf("dequeueCount : %d ", q->dequeueCount);
-    printf("enqueueBlockCount : %d ", q->enqueueBlockCount);
-    printf("dequeueBlockCount : %d ", q->dequeueBlockCount);
-
+    printf("\nenqueueCount : %d\n", q->enqueueCount);
+    printf("dequeueCount : %d\n", q->dequeueCount);
+    printf("enqueueBlockCount: %d\n", q->enqueueBlockCount);
+    printf("dequeueBlockCount: %d\n", q->dequeueBlockCount);
+    printf("currentSize : %d\n", q->currSize);
 }
 
 

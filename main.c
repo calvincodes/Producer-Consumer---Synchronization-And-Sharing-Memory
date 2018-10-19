@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <execinfo.h>
+#include <signal.h>
 #include "reader.h"
 #include "munch1.h"
 #include "munch2.h"
@@ -56,11 +58,17 @@ int main() {
         printf("Thread join Failed for Munch2");
         return 2;
     }
+
     if (pthread_join(writer, (void **) NULL) != 0){
         printf("Thread join Failed for Writer");
         return 2;
     }
 
+    printf("Statistics of Reader To Munch1 Queue");
+    PrintQueueStats(readerToMunch1);
+    printf("\nStatistics of Munch1 To Munch2 Queue");
+    PrintQueueStats(munch1ToMunch2);
+    printf("\nStatistics of Munch2 To Writer Queue");
     PrintQueueStats(munch2ToWriter);
     return 0;
 }

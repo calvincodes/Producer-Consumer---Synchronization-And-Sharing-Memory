@@ -4,6 +4,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "munch2.h"
 
 
@@ -23,19 +24,20 @@ void *convertToLowerCase(void *arg){
     // If you find a NULL, then terminate the thread
     while (data != NULL){
         int i = 0;
-        char *str = strdup(data);
+        char *str = data;
         while (str[i])
         {
             if (str[i] >= 97 && str[i] <= 122)
                 str[i] -= 32;
             i++;
         }
+
         EnqueueString(munch2ToWriter, str);
+
         data = DequeueString(munch1ToMunch2);
     }
-    EnqueueString(munch2ToWriter, NULL);
 
-    free(data);
+    EnqueueString(munch2ToWriter, NULL);
 
     pthread_exit(0);
 
