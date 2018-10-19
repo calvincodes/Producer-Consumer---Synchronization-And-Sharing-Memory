@@ -32,7 +32,7 @@ queue.o: queue.c queue.h
 	$(CC) $(WARNING_FLAGS) -c queue.c
 
 struct_args.o: struct_args.c struct_args.h queue.h
-    $(CC) $(WARNING_FLAGS) -c struct_args.c
+	$(CC) $(WARNING_FLAGS) -c struct_args.c
 
 #
 # Run the Clang Static Analyzer

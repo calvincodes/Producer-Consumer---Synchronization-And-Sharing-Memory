@@ -90,7 +90,6 @@ void PrintQueueStats(Queue *q) {
     fprintf(stderr, "dequeueCount : %d\n", q->dequeueCount);
     fprintf(stderr, "enqueueBlockCount: %d\n", q->enqueueBlockCount);
     fprintf(stderr, "dequeueBlockCount: %d\n", q->dequeueBlockCount);
-    fprintf(stderr, "currentSize : %d\n", q->currSize);
 }
 
 
