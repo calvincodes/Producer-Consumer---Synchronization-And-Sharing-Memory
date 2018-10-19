@@ -14,7 +14,7 @@ void *readInput(void *arg){
 
     if( inputBuffer == NULL)
     {
-        fprintf(stderr, "Unable to allocate memory for reader input buffer");
+        fprintf(stderr, "Unable to allocate memory for reader input buffer\n");
         exit(1);
     }
 
