@@ -32,7 +32,7 @@ void *replaceBlanks(void *arg){
 }
 
 // TODO: Remove. This is for module testing purpose only.
-int main() {
+int main_t() {
     Queue *queue = CreateStringQueue(10);
     EnqueueString(queue, "arpit jain uw madison summer internship lagwa do");
     EnqueueString(queue, "anshu verma vishnu");
